@@ -80,14 +80,14 @@ export default function FocusTimer() {
   }, [time, isSessionActive]);
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100">
-      <Card className="w-full max-w-md">
+    <div className="min-h-screen flex items-center justify-center bg-black">
+      <Card className="w-full text-white max-w-md">
         <CardHeader>
           <CardTitle>{isSessionActive ? sessionName : 'Focus Timer'}</CardTitle>
         </CardHeader>
         <CardContent>
           {!isSessionActive ? (
-            <div className="space-y-4">
+            <div className="space-y-4 bg-black text-white">
               <Input
                 type="text"
                 placeholder="Session Name"
