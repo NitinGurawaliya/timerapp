@@ -14,7 +14,7 @@ export default function FocusTimer() {
   const [isSessionActive, setIsSessionActive] = useState(false);
   const [showExitDialog, setShowExitDialog] = useState(false);
   const [showCongrats, setShowCongrats] = useState(false);
-  const { time, isRunning, startTimer, pauseTimer, resumeTimer, resetTimer } = useTimer(0);
+  const { time, isRunning, startTimer, pauseTimer, resetTimer } = useTimer(0);
   const { isFullscreen, enterFullscreen, exitFullscreen } = useFullscreen();
 
   const formatTime = (seconds: number) => {
@@ -31,13 +31,13 @@ export default function FocusTimer() {
     startTimer(totalSeconds);
   };
 
-  const endSession = () => {
+  const endSession = (completed: boolean) => {
     setIsSessionActive(false);
-    if (isFullscreen) {
-      exitFullscreen();
-    }
+    exitFullscreen();
     resetTimer();
-    setShowCongrats(true);
+    if (completed) {
+      setShowCongrats(true);
+    }
   };
 
   const handleEarlyExit = () => {
@@ -47,12 +47,12 @@ export default function FocusTimer() {
 
   const confirmExit = () => {
     setShowExitDialog(false);
-    endSession();
+    endSession(false);
   };
 
   const cancelExit = () => {
     setShowExitDialog(false);
-    resumeTimer();
+    startTimer(time);
   };
 
   const motivationalQuotes = [
@@ -75,7 +75,7 @@ export default function FocusTimer() {
 
   useEffect(() => {
     if (time === 0 && isSessionActive) {
-      endSession();
+      endSession(true);
     }
   }, [time, isSessionActive]);
 
